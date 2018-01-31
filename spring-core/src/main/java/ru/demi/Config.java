@@ -5,28 +5,19 @@ import static org.springframework.beans.factory.config.ConfigurableBeanFactory.S
 import java.text.DateFormat;
 import java.util.Date;
 
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.PropertySource;
+import org.springframework.context.annotation.ImportResource;
 import org.springframework.context.annotation.Scope;
 
-import ru.demi.logger.CacheFileEventLogger;
-import ru.demi.logger.ConsoleEventLogger;
 import ru.demi.logger.Event;
-import ru.demi.logger.EventLogger;
-import ru.demi.logger.FileEventLogger;
 
 @Configuration
-@PropertySource("app.properties")
+@ComponentScan("ru.demi")
+@ImportResource("loggers.xml")
 public class Config {
 
-	@Value("${fileName}")
-	private String fileName;
-
-	@Value("${cacheSize}")
-	private int cacheSize;
-    
     @Bean
     public Client client() {
         return new Client("1", "Ivan Ivanov");
@@ -41,25 +32,5 @@ public class Config {
     @Scope(SCOPE_PROTOTYPE)
     public Event event() {
         return new Event(new Date(), dateFormat());
-    }
-    
-    @Bean
-    public EventLogger eventLogger() {
-        return new ConsoleEventLogger();
-    }
-
-    @Bean
-	public EventLogger fileEventLogger() {
-    	return new FileEventLogger(fileName);
-	}
-
-	@Bean
-	public CacheFileEventLogger cacheFileEventLogger() {
-    	return new CacheFileEventLogger(fileName, cacheSize);
-	}
-
-    @Bean
-    public App app() {
-        return new App(client(), cacheFileEventLogger());
     }
 }

@@ -1,20 +1,24 @@
 package ru.demi;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
+import org.springframework.stereotype.Component;
 import ru.demi.logger.Event;
 import ru.demi.logger.EventLogger;
 
 import java.util.concurrent.TimeUnit;
 
+@Component
 public class App {
     private Client client;
     private EventLogger eventLogger;
-    
-    public App(Client client, EventLogger eventLogger) {
+
+    @Autowired
+    public App(Client client, EventLogger cacheFileEventLogger) {
         this.client = client;
-        this.eventLogger = eventLogger;
+        this.eventLogger = cacheFileEventLogger;
     }
     
     public static void main(String[] args) throws InterruptedException {
@@ -30,7 +34,7 @@ public class App {
 		event3.setMessage("Event for user 3");
 		app.logEvent(event3);
 
-		TimeUnit.SECONDS.sleep(5);
+		TimeUnit.SECONDS.sleep(3);
 
 		context.close();
 	}
