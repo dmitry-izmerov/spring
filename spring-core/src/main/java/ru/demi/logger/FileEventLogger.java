@@ -26,7 +26,7 @@ public class FileEventLogger implements EventLogger {
 	@Override
 	public void logEvent(Event event) {
 		try {
-			FileUtils.writeStringToFile(file, event.getMessage(), StandardCharsets.UTF_8, true);
+			FileUtils.writeStringToFile(file, String.format("%s%n", event.getMessage()), StandardCharsets.UTF_8, true);
 		} catch (IOException e) {
 			throw new RuntimeException("Writing to file failed.", e);
 		}

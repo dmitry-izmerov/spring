@@ -11,6 +11,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.context.annotation.Scope;
 
+import ru.demi.logger.CacheFileEventLogger;
 import ru.demi.logger.ConsoleEventLogger;
 import ru.demi.logger.Event;
 import ru.demi.logger.EventLogger;
@@ -22,6 +23,9 @@ public class Config {
 
 	@Value("${fileName}")
 	private String fileName;
+
+	@Value("${cacheSize}")
+	private int cacheSize;
     
     @Bean
     public Client client() {
@@ -49,8 +53,13 @@ public class Config {
     	return new FileEventLogger(fileName);
 	}
 
+	@Bean
+	public CacheFileEventLogger cacheFileEventLogger() {
+    	return new CacheFileEventLogger(fileName, cacheSize);
+	}
+
     @Bean
     public App app() {
-        return new App(client(), fileEventLogger());
+        return new App(client(), cacheFileEventLogger());
     }
 }
