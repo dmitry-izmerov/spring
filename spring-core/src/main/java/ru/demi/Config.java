@@ -5,16 +5,23 @@ import static org.springframework.beans.factory.config.ConfigurableBeanFactory.S
 import java.text.DateFormat;
 import java.util.Date;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.context.annotation.Scope;
 
 import ru.demi.logger.ConsoleEventLogger;
 import ru.demi.logger.Event;
 import ru.demi.logger.EventLogger;
+import ru.demi.logger.FileEventLogger;
 
 @Configuration
+@PropertySource("app.properties")
 public class Config {
+
+	@Value("${fileName}")
+	private String fileName;
     
     @Bean
     public Client client() {
@@ -36,9 +43,14 @@ public class Config {
     public EventLogger eventLogger() {
         return new ConsoleEventLogger();
     }
-    
+
+    @Bean
+	public EventLogger fileEventLogger() {
+    	return new FileEventLogger(fileName);
+	}
+
     @Bean
     public App app() {
-        return new App(client(), eventLogger());
+        return new App(client(), fileEventLogger());
     }
 }
