@@ -5,10 +5,12 @@ import static org.springframework.beans.factory.config.ConfigurableBeanFactory.S
 import java.text.DateFormat;
 import java.util.Date;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.ImportResource;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.context.annotation.Scope;
 
 import ru.demi.logger.Event;
@@ -16,11 +18,18 @@ import ru.demi.logger.Event;
 @Configuration
 @ComponentScan("ru.demi")
 @ImportResource("loggers.xml")
+@PropertySource("client.properties")
 public class Config {
+
+	@Value("${id}")
+	private String id;
+
+	@Value("${fullName}")
+	private String fullName;
 
     @Bean
     public Client client() {
-        return new Client("1", "Ivan Ivanov");
+        return new Client(id, fullName);
     }
     
     @Bean
