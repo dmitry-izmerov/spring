@@ -22,7 +22,7 @@
         <constructor-arg>
             <list>
                 <ref bean="consoleEventLogger"/>
-                <ref bean="fileEventLogger"/>
+                <ref bean="#{T(ru.demi.logger.Event).isDay() ? 'fileEventLogger' : 'cacheFileEventLogger'}"/>
             </list>
         </constructor-arg>
     </bean>
