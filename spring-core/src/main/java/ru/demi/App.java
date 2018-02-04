@@ -30,9 +30,11 @@ public class App {
 	}
 
     public static void main(String[] args) throws InterruptedException {
-        ConfigurableApplicationContext context = new AnnotationConfigApplicationContext(Config.class);
+		long start = System.currentTimeMillis();
+		ConfigurableApplicationContext context = new AnnotationConfigApplicationContext(Config.class);
         App app = context.getBean(App.class);
-        app.setLoggers((Map<EventType, EventLogger>) context.getBean("loggers"));
+		Config config = context.getBean(Config.class);
+		app.setLoggers((Map<EventType, EventLogger>) context.getBean("loggers"));
 		Event event1 = context.getBean(Event.class);
 		Event event2 = context.getBean(Event.class);
 		Event event3 = context.getBean(Event.class);
@@ -46,6 +48,11 @@ public class App {
 		TimeUnit.SECONDS.sleep(3);
 
 		context.close();
+
+		if (config.isDevEnv()) {
+			long workTime = System.currentTimeMillis() - start;
+			System.out.printf("App work time = %s s.", workTime / 1000d);
+		}
 	}
     
     public void logEvent(Event event, EventType eventType) {

@@ -27,6 +27,12 @@ public class Config {
 	@Value("${fullName}")
 	private String fullName;
 
+	@Value("#{ systemEnvironment['ENV'] }")
+	private String env;
+
+	@Value("${devEnvName}")
+	private String devEnvName;
+
     @Bean
     public Client client() {
         return new Client(id, fullName);
@@ -42,4 +48,8 @@ public class Config {
     public Event event() {
         return new Event(new Date(), dateFormat());
     }
+
+	public boolean isDevEnv() {
+		return devEnvName.equals(env);
+	}
 }

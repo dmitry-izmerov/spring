@@ -19,7 +19,7 @@ public class FileEventLogger implements EventLogger {
 	private void postConstruct() throws IOException {
 		file = new File(fileName);
 		if (!file.canWrite()) {
-			throw new IOException(String.format("Cannot write to file with name %s.", fileName));
+			throw new IOException(String.format("Cannot write to file with name: %s and path: %s", fileName, file.getAbsolutePath()));
 		}
 	}
 
