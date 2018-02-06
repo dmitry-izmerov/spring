@@ -20,7 +20,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <lombok.version>1.16.20</lombok.version>
         <spring.version>4.3.14.RELEASE</spring.version>
-        <aspectj.version>1.5.4</aspectj.version>
+        <aspectj.version>1.7.0</aspectj.version>
     </properties>
 
     <dependencies>
