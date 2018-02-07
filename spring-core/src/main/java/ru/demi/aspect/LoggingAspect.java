@@ -17,7 +17,7 @@ public class LoggingAspect {
 
 	private static final Logger LOG = Logger.getLogger(LoggingAspect.class.getSimpleName());
 
-	@Pointcut("execution(* *.logEvent(..))")
+	@Pointcut("execution(* ru.demi.logger.*.logEvent(..))")
 	public void allLogEventMethods(){/*NOP*/}
 
 	@Before("allLogEventMethods()")
