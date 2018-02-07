@@ -14,13 +14,18 @@ import org.springframework.context.annotation.ImportResource;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.context.annotation.Scope;
 
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import ru.demi.logger.Event;
+
+import javax.annotation.PostConstruct;
+import javax.sql.DataSource;
 
 @Configuration
 @ComponentScan("ru.demi")
 @ImportResource("loggers.xml")
-@PropertySource("client.properties")
-@EnableAspectJAutoProxy
+@PropertySource({"client.properties", "classpath:jdbc.properties"})
+@EnableAspectJAutoProxy(proxyTargetClass = true)
 public class Config {
 
 	@Value("${id}")
@@ -34,6 +39,22 @@ public class Config {
 
 	@Value("${devEnvName}")
 	private String devEnvName;
+
+	@Value("${jdbc.driverClassName}")
+	private String driverClassName;
+	@Value("${jdbc.url}")
+	private String url;
+	@Value("${jdbc.username}")
+	private String userName;
+	@Value("${jdbc.password}")
+	private String password;
+
+	@PostConstruct
+	private void postConstruct() {
+		JdbcTemplate jdbcTemplate = jdbcTemplate();
+		jdbcTemplate.execute("DROP TABLE events IF EXISTS");
+		jdbcTemplate.execute("CREATE TABLE events(id INT PRIMARY KEY, message VARCHAR)");
+	}
 
     @Bean
     public Client client() {
@@ -50,6 +71,18 @@ public class Config {
     public Event event() {
         return new Event(new Date(), dateFormat());
     }
+
+    @Bean
+    public JdbcTemplate jdbcTemplate() {
+    	return new JdbcTemplate(dataSource());
+	}
+
+	@Bean
+	public DataSource dataSource() {
+		DriverManagerDataSource dataSource = new DriverManagerDataSource(url, userName, password);
+		dataSource.setDriverClassName(driverClassName);
+		return dataSource;
+	}
 
 	public boolean isDevEnv() {
 		return devEnvName.equals(env);
