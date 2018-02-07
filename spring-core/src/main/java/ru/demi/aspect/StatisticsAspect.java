@@ -18,8 +18,8 @@ public class StatisticsAspect {
 	public void count(JoinPoint joinPoint) {
 		Class<?> clazz = joinPoint.getTarget().getClass();
 
-		counters.putIfAbsent(clazz, 1L);
 		counters.computeIfPresent(clazz, (key, oldValue) -> oldValue + 1);
+		counters.putIfAbsent(clazz, 1L);
 	}
 
 	public Map<Class<?>, Long> getCounters() {
