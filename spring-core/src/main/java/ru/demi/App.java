@@ -6,6 +6,7 @@ import org.springframework.context.annotation.AnnotationConfigApplicationContext
 
 import org.springframework.stereotype.Component;
 import ru.demi.aspect.StatisticsAspect;
+import ru.demi.logger.DbLogger;
 import ru.demi.logger.Event;
 import ru.demi.logger.EventLogger;
 import ru.demi.logger.EventType;
@@ -40,6 +41,7 @@ public class App {
 		Event event1 = context.getBean(Event.class);
 		Event event2 = context.getBean(Event.class);
 		Event event3 = context.getBean(Event.class);
+		Event event4 = context.getBean(Event.class);
 
 		app.setLoggers((Map<EventType, EventLogger>) context.getBean("loggers"));
 		event1.setMessage("Event for user 1");
@@ -48,6 +50,8 @@ public class App {
 		app.logEvent(event2, EventType.INFO);
 		event3.setMessage("Event for user 3");
 		app.logEvent(event3, EventType.ERROR);
+		event4.setMessage("Event saved in db.");
+		app.logEvent(event4, EventType.IMPORTANT);
 
 		TimeUnit.SECONDS.sleep(3);
 

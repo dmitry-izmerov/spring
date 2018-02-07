@@ -30,5 +30,6 @@
     <util:map id="loggers" key-type="ru.demi.logger.EventType" value-type="ru.demi.logger.EventLogger">
         <entry key="INFO" value-ref="consoleEventLogger"/>
         <entry key="ERROR" value-ref="combinedEventLogger"/>
+        <entry key="IMPORTANT" value-ref="dbLogger"/>
     </util:map>
 </beans>
