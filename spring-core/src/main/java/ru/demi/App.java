@@ -6,10 +6,10 @@ import org.springframework.context.annotation.AnnotationConfigApplicationContext
 
 import org.springframework.stereotype.Component;
 import ru.demi.aspect.StatisticsAspect;
-import ru.demi.logger.DbLogger;
 import ru.demi.logger.Event;
 import ru.demi.logger.EventLogger;
 import ru.demi.logger.EventType;
+import ru.demi.logger.URLEventLogger;
 
 import java.util.Objects;
 import java.util.concurrent.TimeUnit;
@@ -34,8 +34,15 @@ public class App {
     public static void main(String[] args) throws InterruptedException {
 		long start = System.currentTimeMillis();
 
-		ConfigurableApplicationContext context = new AnnotationConfigApplicationContext(Config.class);
-        App app = context.getBean(App.class);
+		ConfigurableApplicationContext context = new AnnotationConfigApplicationContext(Config.class, URLEventLogger.class);
+
+		Object urlEventLogger = context.getBean("URLEventLogger");
+
+		if (urlEventLogger instanceof URLEventLogger) {
+			System.out.println("We got URLEventLogger by name with upper case letters");
+		}
+
+		App app = context.getBean(App.class);
 		StatisticsAspect statisticsAspect = context.getBean(StatisticsAspect.class);
 		Config config = context.getBean(Config.class);
 		Event event1 = context.getBean(Event.class);
