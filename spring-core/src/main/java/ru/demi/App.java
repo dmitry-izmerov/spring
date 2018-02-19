@@ -42,6 +42,15 @@ public class App {
 			System.out.println("We got URLEventLogger by name with upper case letters");
 		}
 
+		/*
+		 *  Here I got thrown exception:
+		 *  Exception in thread "main" org.springframework.beans.factory.NoSuchBeanDefinitionException: No qualifying bean of type 'ru.demi.logger.URLEventLogger' available
+		 *
+		 *  In order to fix this I set @EnableAspectJAutoProxy(proxyTargetClass = true) in Config.class
+		 *  This fix uses CGLIB proxy instead of standard Java interface-based proxies
+		 */
+		URLEventLogger logger = context.getBean(URLEventLogger.class);
+
 		App app = context.getBean(App.class);
 		StatisticsAspect statisticsAspect = context.getBean(StatisticsAspect.class);
 		Config config = context.getBean(Config.class);

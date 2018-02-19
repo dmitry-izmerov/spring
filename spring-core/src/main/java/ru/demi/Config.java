@@ -25,7 +25,7 @@ import javax.sql.DataSource;
 @ComponentScan("ru.demi")
 @ImportResource("loggers.xml")
 @PropertySource({"client.properties", "classpath:jdbc.properties"})
-@EnableAspectJAutoProxy
+@EnableAspectJAutoProxy(proxyTargetClass = true)
 public class Config {
 
 	@Value("${id}")
