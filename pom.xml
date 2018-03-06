@@ -10,6 +10,7 @@
     <modules>
         <module>spring-core</module>
         <module>spring-aop</module>
+        <module>spring-execution-scheduling</module>
     </modules>
 
     <packaging>pom</packaging>
