@@ -11,6 +11,7 @@
         <module>spring-core</module>
         <module>spring-aop</module>
         <module>spring-execution-scheduling</module>
+        <module>spring-validation</module>
     </modules>
 
     <packaging>pom</packaging>
