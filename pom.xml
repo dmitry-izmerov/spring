@@ -12,6 +12,7 @@
         <module>spring-aop</module>
         <module>spring-execution-scheduling</module>
         <module>spring-validation</module>
+        <module>spring-web-mvc</module>
     </modules>
 
     <packaging>pom</packaging>
