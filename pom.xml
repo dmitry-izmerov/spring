@@ -13,6 +13,7 @@
         <module>spring-execution-scheduling</module>
         <module>spring-validation</module>
         <module>spring-web-mvc</module>
+        <module>spring-data-jpa</module>
     </modules>
 
     <packaging>pom</packaging>
