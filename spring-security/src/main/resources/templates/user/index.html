@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <title>Spring Security test app</title>
+        <meta charset="utf-8" />
+        <link rel="stylesheet" href="/css/main.css" th:href="@{/css/main.css}" />
+    </head>
+    <body>
+        <div th:substituteby="index::logout"></div>
+		<p>We are glad to see you on secure users page.</p>
+        <p><a href="/index" th:href="@{/index}">Back to home page</a></p>
+    </body>
+</html>
