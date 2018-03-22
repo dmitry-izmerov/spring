@@ -7,5 +7,7 @@ logging:
     org.springframework.web: INFO
 
 spring:
+  resources:
+    static-locations: classpath:base/static
   thymeleaf:
     cache: false
